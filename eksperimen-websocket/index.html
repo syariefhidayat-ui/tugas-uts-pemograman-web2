@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Eksperimen WebSocket Saya</h2>
+    <input type="text" id="pesanInput" placeholder="Ketik sesuatu...">
+    <button onclick="kirim()">Kirim</button>
+    <ul id="daftarPesan"></ul>
+
+    <script>
+       const socket = new WebSocket('ws://localhost:8080');
+
+        // Menampilkan pesan yang datang dari server
+        socket.onmessage = (event) => {
+            const li = document.createElement('li');
+            li.textContent = event.data;
+            document.getElementById('daftarPesan').appendChild(li);
+        };
+
+        function kirim() {
+            const input = document.getElementById('pesanInput');
+            socket.send(input.value); // Kirim ke server
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
